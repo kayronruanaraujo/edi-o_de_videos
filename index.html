@@ -1,10 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta name="viewport" content="width=1080, height=1920" />
     <script src="assets/vendor/gsap.min.js"></script>
     <style>
+      @font-face {
+        font-family: "Marcellus";
+        src: url("assets/fonts/marcellus-latin-400-normal.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+      }
+      :root {
+        --grafite: #161616;
+        --grafite-2: #222120;
+        --ouro: #d6a85a;
+        --ouro-claro: #f0d39a;
+        --ouro-escuro: #9c6a2c;
+        --marfim: #f5efe4;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -13,24 +27,234 @@
       html,
       body {
         margin: 0;
-        width: 1920px;
-        height: 1080px;
+        width: 1080px;
+        height: 1920px;
         overflow: hidden;
-        background: #0a0a0a;
+        background: var(--grafite);
       }
       #root {
+        position: relative;
         width: 100%;
         height: 100%;
+        overflow: hidden;
+        background: var(--grafite);
+        font-family: Montserrat, sans-serif;
+      }
+
+      /* ---------- footage ---------- */
+      .shot {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .frame {
+        position: absolute;
+        inset: 0;
+      }
+      .frame video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #frame-1521 {
+        transform-origin: 85% 20%;
+      }
+
+      /* legibility gradient over footage */
+      #shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 18%),
+          linear-gradient(0deg, rgba(10, 10, 10, 0.88) 0%, rgba(10, 10, 10, 0.55) 30%, rgba(10, 10, 10, 0) 52%);
+      }
+      #dim {
+        position: absolute;
+        inset: 0;
+        background: rgba(12, 12, 12, 0.72);
+        opacity: 0;
+      }
+
+      /* ---------- captions ---------- */
+      .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 470px;
+        display: flex;
+        justify-content: center;
+      }
+      .cap-inner {
+        width: 880px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .rule {
+        width: 120px;
+        height: 3px;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro-claro), var(--ouro-escuro));
+        transform-origin: 50% 50%;
+      }
+      .label {
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 26px;
+        letter-spacing: 0.32em;
+        color: var(--ouro);
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+      .title {
+        font-family: "Marcellus", serif;
+        font-weight: 400;
+        font-size: 78px;
+        line-height: 1.12;
+        color: var(--marfim);
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+      }
+      .title em {
+        font-style: normal;
+        color: var(--ouro-claro);
+      }
+
+      /* ---------- specialties ---------- */
+      #esp {
+        position: absolute;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
       }
-      #title {
-        color: #f4f4f5;
-        font-size: 72px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
+      .esp-inner {
+        width: 860px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .esp-list {
+        margin-top: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 34px;
+      }
+      .esp-item {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        font-family: "Marcellus", serif;
+        font-size: 70px;
+        color: var(--marfim);
+      }
+      .esp-item i {
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: var(--ouro);
+        transform: rotate(45deg);
+      }
+      .esp-foot {
+        margin-top: 56px;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        color: var(--ouro);
+      }
+
+      /* ---------- name lower third ---------- */
+      #nome {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 470px;
+        display: flex;
+        justify-content: center;
+      }
+      .nome-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .nome-title {
+        font-family: "Marcellus", serif;
+        font-size: 104px;
+        line-height: 1;
+        color: var(--marfim);
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+      }
+      .nome-sub {
+        margin-top: 22px;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        color: var(--ouro);
+      }
+
+      /* ---------- brand cards ---------- */
+      .card {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at 50% 42%, #2a2826 0%, var(--grafite) 62%);
+      }
+      .logo {
+        width: 860px;
+        height: auto;
+        display: block;
+      }
+      .gold-line {
+        width: 520px;
+        height: 2px;
+        margin-top: 64px;
+        background: linear-gradient(90deg, rgba(214, 168, 90, 0), var(--ouro), rgba(214, 168, 90, 0));
+      }
+
+      #cta-head {
+        margin-top: 120px;
+        font-family: "Marcellus", serif;
+        font-size: 84px;
+        color: var(--marfim);
+      }
+      #cta-sub {
+        margin-top: 20px;
+        font-size: 30px;
+        color: rgba(245, 239, 228, 0.72);
+        letter-spacing: 0.02em;
+      }
+      .contacts {
+        margin-top: 70px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: stretch;
+      }
+      .contact {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 26px 46px 26px 34px;
+        border: 2px solid rgba(214, 168, 90, 0.55);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .contact svg {
+        width: 62px;
+        height: 62px;
+        flex: none;
+      }
+      .contact span {
+        font-size: 50px;
+        font-weight: 700;
+        color: var(--marfim);
+        letter-spacing: 0.01em;
       }
     </style>
   </head>
@@ -39,15 +263,199 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="10"
-      data-width="1920"
-      data-height="1080"
+      data-duration="46"
+      data-width="1080"
+      data-height="1920"
     >
-      <h1 id="title" class="clip" data-start="0" data-duration="10" data-track-index="0">Edição de Vídeos<//h1>
+      <!-- ===== FOOTAGE (track 0) ===== -->
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-a">
+          <video id="v-forum" class="clip" src="assets/footage/visita-1519.mp4" data-start="2.6" data-duration="4" data-media-start="0" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-b">
+          <video id="v-chegada" class="clip" src="assets/footage/visita-1517.mp4" data-start="6.6" data-duration="5" data-media-start="1.5" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-c">
+          <video id="v-entrada" class="clip" src="assets/footage/visita-1519.mp4" data-start="11.6" data-duration="5.5" data-media-start="6" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-d">
+          <video id="v-espera" class="clip" src="assets/footage/visita-1520.mp4" data-start="17.1" data-duration="4" data-media-start="0.3" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-1521">
+          <video id="v-sala" class="clip" src="assets/footage/visita-1521.mp4" data-start="21.1" data-duration="3" data-media-start="0.4" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-e">
+          <video id="v-orientacao" class="clip" src="assets/footage/visita-1522.mp4" data-start="24.1" data-duration="13.4" data-media-start="5" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="frame" data-layout-allow-overflow id="frame-f">
+          <video id="v-retrato" class="clip" src="assets/footage/visita-1517.mp4" data-start="37.5" data-duration="2.5" data-media-start="11.3" data-track-index="0" data-volume="0.5" data-has-audio="true" playsinline></video>
+        </div>
+      </div>
+
+      <!-- ===== OVERLAYS (track 1) ===== -->
+      <div id="shade" class="clip" data-start="2.6" data-duration="37.4" data-track-index="1"></div>
+      <div id="dim" class="clip" data-start="33.1" data-duration="4.4" data-track-index="1"></div>
+
+      <!-- ===== CAPTIONS (track 2) ===== -->
+      <div id="c1" class="cap clip" data-start="2.9" data-duration="3.6" data-track-index="2">
+        <div class="cap-inner">
+          <div class="rule"></div>
+          <div class="label">Perícia judicial</div>
+          <div class="title">Dia de perícia no <em>Fórum de Tuntum</em></div>
+        </div>
+      </div>
+      <div id="c2" class="cap clip" data-start="6.6" data-duration="5" data-track-index="2">
+        <div class="cap-inner">
+          <div class="title">Acompanho cada cliente <em>pessoalmente</em></div>
+        </div>
+      </div>
+      <div id="c3" class="cap clip" data-start="11.6" data-duration="5.5" data-track-index="2">
+        <div class="cap-inner">
+          <div class="title">A perícia é um momento <em>decisivo</em> do processo</div>
+        </div>
+      </div>
+      <div id="c4" class="cap clip" data-start="17.1" data-duration="7" data-track-index="2">
+        <div class="cap-inner">
+          <div class="title">E nenhum cliente enfrenta esse momento <em>sozinho</em></div>
+        </div>
+      </div>
+      <div id="c5" class="cap clip" data-start="24.1" data-duration="4.6" data-track-index="2">
+        <div class="cap-inner">
+          <div class="title">Oriento cada cliente <em>antes da perícia</em></div>
+        </div>
+      </div>
+      <div id="c6" class="cap clip" data-start="28.7" data-duration="4.4" data-track-index="2">
+        <div class="cap-inner">
+          <div class="title">Para que chegue <em>seguro e preparado</em></div>
+        </div>
+      </div>
+
+      <div id="esp" class="clip" data-start="33.1" data-duration="4.4" data-track-index="2">
+        <div class="esp-inner">
+          <div class="rule" id="esp-rule"></div>
+          <div class="label" id="esp-label">Atuo em</div>
+          <div class="esp-list">
+            <div class="esp-item"><i></i>Auxílio por incapacidade</div>
+            <div class="esp-item"><i></i>Aposentadorias</div>
+            <div class="esp-item"><i></i>BPC/LOAS</div>
+            <div class="esp-item"><i></i>Auxílio-acidente</div>
+          </div>
+          <div class="esp-foot" id="esp-foot">DIREITO PREVIDENCIÁRIO</div>
+        </div>
+      </div>
+
+      <div id="nome" class="clip" data-start="37.5" data-duration="2.5" data-track-index="2">
+        <div class="nome-inner">
+          <div class="rule" id="nome-rule"></div>
+          <div class="nome-title">Dr. Araújo</div>
+          <div class="nome-sub">ADVOGADO · OAB/MA 27.851</div>
+        </div>
+      </div>
+
+      <!-- ===== BRAND CARDS (track 3) ===== -->
+      <div id="intro" class="card clip" data-start="0" data-duration="2.9" data-track-index="3">
+        <div id="intro-wrap">
+          <img class="logo" id="intro-logo" src="assets/brand/logo-dourado.png" alt="Dr. Araújo Advogado" />
+        </div>
+        <div class="gold-line" id="intro-line"></div>
+      </div>
+
+      <div id="cta" class="card clip" data-start="39.6" data-duration="6.4" data-track-index="3">
+        <img class="logo" id="cta-logo" src="assets/brand/logo-dourado.png" alt="Dr. Araújo Advogado" style="width: 760px" />
+        <div id="cta-head">Fale comigo</div>
+        <div id="cta-sub">Atendimento e orientação para o seu caso</div>
+        <div class="contacts">
+          <div class="contact" id="ct-wa">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#d6a85a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M32 6C17.6 6 6 17.4 6 31.4c0 4.9 1.4 9.4 3.9 13.3L6 58l13.7-3.8c3.7 2 7.9 3.1 12.3 3.1 14.4 0 26-11.4 26-25.4S46.4 6 32 6z" />
+              <path d="M23.5 19.5c-1 0-2.4.4-3.3 2-1 1.6-1.6 4.4.4 8.4 2.3 4.6 6.5 9.6 12.2 12 4.4 1.9 6.6 1.3 8-.3 1.1-1.3 1.3-3 1-3.6-.3-.6-4.8-3-5.6-3-.8 0-1.8 2.4-2.6 2.6-.8.2-3.6-1-6-3.4s-3.6-4.8-3.3-5.6c.3-.8 2.5-1.7 2.5-2.6 0-.8-2.2-6.4-3.3-6.5z" />
+            </svg>
+            <span>(99) 9123-9180</span>
+          </div>
+          <div class="contact" id="ct-ig">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#d6a85a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="8" y="8" width="48" height="48" rx="14" />
+              <circle cx="32" cy="32" r="11" />
+              <circle cx="46" cy="18" r="1.6" fill="#d6a85a" />
+            </svg>
+            <span>@adv_draraujo</span>
+          </div>
+        </div>
+      </div>
     </div>
+
     <script>
       const tl = gsap.timeline({ paused: true });
-      tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
+      const E_IN = "power3.out";
+      const E_OUT = "power2.in";
+
+      // ----- intro logo -----
+      tl.fromTo("#intro-logo", { opacity: 0, scale: 0.94, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.1, ease: E_IN }, 0.15);
+      tl.fromTo("#intro-line", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.9, ease: "power2.inOut" }, 0.6);
+      tl.to("#intro", { opacity: 0, duration: 0.3, ease: "none" }, 2.6);
+
+      // ----- slow push-in on every shot -----
+      const shots = [
+        ["#frame-a", 2.6, 4],
+        ["#frame-b", 6.6, 5],
+        ["#frame-c", 11.6, 5.5],
+        ["#frame-d", 17.1, 4],
+        ["#frame-e", 24.1, 13.4],
+        ["#frame-f", 37.5, 2.5],
+      ];
+      shots.forEach(([sel, t, d]) => {
+        tl.fromTo(sel, { scale: 1 }, { scale: 1.06, duration: d, ease: "none" }, t);
+      });
+      // 1521: cropped in to keep the camera operator's foot out of frame
+      tl.fromTo("#frame-1521", { scale: 1.4 }, { scale: 1.46, duration: 3, ease: "none" }, 21.1);
+
+      // ----- captions: soft rise in, quick fade out -----
+      function caption(id, start, dur) {
+        const sel = id + " .cap-inner";
+        tl.fromTo(sel, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: E_IN }, start + 0.15);
+        tl.to(sel, { opacity: 0, y: -12, duration: 0.3, ease: E_OUT }, start + dur - 0.35);
+      }
+      tl.fromTo("#c1 .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, 3.0);
+      caption("#c1", 2.9, 3.6);
+      caption("#c2", 6.6, 5);
+      caption("#c3", 11.6, 5.5);
+      caption("#c4", 17.1, 7);
+      caption("#c5", 24.1, 4.6);
+      caption("#c6", 28.7, 4.4);
+
+      // ----- specialties -----
+      tl.fromTo("#dim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 33.1);
+      tl.fromTo("#esp-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 33.2);
+      tl.fromTo("#esp-label", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: E_IN }, 33.3);
+      tl.fromTo("#esp .esp-item", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: E_IN, stagger: 0.32 }, 33.55);
+      tl.fromTo("#esp-foot", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 34.9);
+      tl.to("#esp .esp-inner", { opacity: 0, duration: 0.3, ease: E_OUT }, 37.15);
+      tl.to("#dim", { opacity: 0, duration: 0.3, ease: "none" }, 37.2);
+
+      // ----- name -----
+      tl.fromTo("#nome-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 37.6);
+      tl.fromTo("#nome .nome-title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E_IN }, 37.65);
+      tl.fromTo("#nome .nome-sub", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 38.0);
+
+      // ----- CTA -----
+      tl.fromTo("#cta", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 39.6);
+      tl.fromTo("#cta-logo", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, ease: E_IN }, 39.8);
+      tl.fromTo("#cta-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E_IN }, 40.3);
+      tl.fromTo("#cta-sub", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 40.6);
+      tl.fromTo(".contact", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: E_IN, stagger: 0.25 }, 40.9);
+
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>
